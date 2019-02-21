@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <bean id="heavyQuestion"
+          class="pl.sda.spring.coredi.beans.HeavyQuestion" scope="singleton">
+        <property name="question" value="What is a meaning of life?"/>
+        <!-- additional collaborators and configuration for this bean go here -->
+    </bean>
+
+    <bean id="polish_philosopher" class="pl.sda.spring.coredi.beans.Philosopher">
+        <property name="name" value="janusz"/>
+        <property name="mostImportantQuestion" ref="heavyQuestion"/>
+        <property name="attributes">
+            <list>
+                <bean class="pl.sda.spring.coredi.beans.PhilosopherAttribute" scope="prototype">
+                    <constructor-arg type="java.lang.String" value="ksiazka"/>
+                    <constructor-arg name="cost" value="12"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="russian_philosopher" class="pl.sda.spring.coredi.beans.Philosopher"
+          primary="true">
+        <property name="name" value="andriej"/>
+        <property name="mostImportantQuestion" ref="heavyQuestion"/>
+        <property name="attributes">
+            <list>
+                <bean class="pl.sda.spring.coredi.beans.PhilosopherAttribute" scope="prototype">
+                    <constructor-arg type="java.lang.String" value="marynarka"/>
+                    <constructor-arg name="cost" value="15"/>
+                </bean>
+                <bean class="pl.sda.spring.coredi.beans.PhilosopherAttribute" scope="prototype">
+                    <constructor-arg type="java.lang.String" value="ksiazka"/>
+                    <constructor-arg name="cost" value="12"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="german_philosopher" class="pl.sda.spring.coredi.beans.Philosopher"
+          init-method="afterPropertiesSet">
+        <property name="name" value="janusz"/>
+    </bean>
+
+    <bean class="pl.sda.spring.coredi.beans.Car">
+        <constructor-arg name="brand" value="Skoda"/>
+        <constructor-arg type="int" value="120"/>
+        <property name="engine" ref="engine"/>
+    </bean>
+
+    <bean id="engine" class="pl.sda.spring.coredi.beans.Engine">
+        <constructor-arg name="engineVolume" value="1200"/>
+        <constructor-arg name="engineType" value="GAS"/>
+    </bean>
+
+    <bean class="pl.sda.spring.coredi.beans.PhylosophyBeanPostProcessor"/>
+    <bean class="pl.sda.spring.coredi.beans.EngineBeanPostprocessor"/>
+</beans>
